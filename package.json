@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "~1.15.2",
+    "bootstrap": "^3.3.7",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "ejs": "~2.5.2",
@@ -14,6 +15,7 @@
     "express-mysql-session": "^1.2.0",
     "express-session": "^1.14.2",
     "morgan": "~1.7.0",
+    "mysql": "^2.12.0",
     "serve-favicon": "~2.3.0"
   }
 }

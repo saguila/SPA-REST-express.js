@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% if(typeof title != 'undefined') { %>
+    <% if(title.length > 0) { %>
+    <title><%= title %></title>
+    <% }} %>
+    <link rel='stylesheet' href='/stylesheets/bootstrap-theme.min.css' type="text/css" />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' type="text/css" />
+    <link rel='stylesheet' href='/stylesheets/jquery-ui.css' type="text/css" />
+    <link rel='stylesheet' href='/stylesheets/jquery-ui.structure.min.css' type="text/css" />
+    <link rel='stylesheet' href='/stylesheets/jquery-ui.theme.min.css' type="text/css" />
+    <script src="/javascripts/jquery-3.1.1.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/javascripts/jquery-ui.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/javascripts/bootstrap.min.js" language="javascript" type="text/javascript"></script>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li role="presentation"><p class="navbar-text" >Portal de cursos</p></li>
+    <li role="presentation" class="active"><a href="/buscarCurso">Buscar cursos</a></li>
+</ul>

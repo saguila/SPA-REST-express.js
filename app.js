@@ -7,12 +7,26 @@ var bodyParser = require('body-parser');
 var session = require('./bin/sesiones');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var cursos = require('./routes/cursos');
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+var consultas = require('./bin/consultasSQL');
+
+/*
+var x = {titulo:'Cocina', description:'cocina sobrecillos de jamon', localidad:'Madrid', direccion:'Getafe', plazas:103, fecha_inicio:'2012/10/10',fecha_fin:'2012/11/10',imagen:''};
+consultas.updateCurso(15,x,function(err,result){
+    console.log(result);
+});
+consultas.selectAllCurso(function(err,result){
+  console.log(result)
+});
+consultas.searchCurso({str:'test',num:4,pos:1},function (err,result) {
+   console.log(result);
+});*/
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -23,7 +37,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+app.use('/', index,cursos);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
