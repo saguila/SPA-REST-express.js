@@ -25,7 +25,7 @@ consultas.selectAllCurso(function(err,result){
   console.log(result)
 });
 consultas.searchCurso({str:'test',num:4,pos:1},function (err,result) {
-   console.log(result);
+   console.log(result.datos);
 });*/
 
 // uncomment after placing your favicon in /public

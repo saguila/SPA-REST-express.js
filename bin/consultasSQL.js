@@ -1,6 +1,26 @@
 mysql = require('mysql');
 conf = require('../config');
 
+
+function busquedaNumResultados(busqueda,callback){
+        var conn = mysql.createConnection(conf.DB);
+        if(busqueda != null) {
+            query = 'SELECT COUNT(*) AS numfilas FROM CURSOS WHERE MATCH(titulo, descripcion) AGAINST (?)';
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [busqueda.str,busqueda.num,busqueda.pos];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        else {
+                            callback(null, result[0].numfilas);
+                            conn.end();
+                        }
+                    });
+                }
+            });
+        }
+}
 module.exports = {
     // Probado
     insertCurso: function(values,callback) {
@@ -111,8 +131,13 @@ module.exports = {
                     conn.query(query, obj, function (err, result) {
                         if (err) callback(err, null);
                         else {
-                            callback(null, result);
-                            conn.end();
+                            busquedaNumResultados(busqueda,function(err2,numResultados){
+                                if(err) callback(err2,null);
+                                else{
+                                    callback(null,{cantidad:numResultados,datos:result});
+                                    conn.end();
+                                }
+                            });
                         }
                     });
                 }

@@ -8,40 +8,9 @@
                 <input type="text" class="form-control" name="busqueda" id="searchInput" placeholder="Busqueda por nombre">
                 <button type="submit" id="botonSearchCursos" class="btn btn-primary"><p class="glyphicon glyphicon-search"> Buscar</p></button>
             </div>
-
+        <br/>
+        <div id="resultadoBusqueda"></div>
     </div>
-    <input type="hidden" id="posicionActual" value="0">
-    <div id="resultadoBusqueda">
-        <h3>No hay resultados</h3>
-    </div>
-<% if(typeof result != 'undefined') { %>
-    <!-- Table -->
-    <table class="table">
-        <tr>
-            <td>Nombre</td><td>Lugar</td><td>Inicio</td><td>Fin</td><td>Plazas libres</td>
-        </tr>
-    </table>
 </div>
-
-<nav aria-label="Page navigation">
-<ul class="pagination">
-    <li>
-        <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-        </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-        <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-        </a>
-    </li>
-</ul>
-</nav>
-<% } %>
 </body>
 </html>
