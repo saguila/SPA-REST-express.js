@@ -2,25 +2,45 @@ mysql = require('mysql');
 conf = require('../config');
 
 
-function busquedaNumResultados(busqueda,callback){
-        var conn = mysql.createConnection(conf.DB);
-        if(busqueda != null) {
-            query = 'SELECT COUNT(*) AS numfilas FROM CURSOS WHERE MATCH(titulo, descripcion) AGAINST (?)';
-            conn.connect(function(err){
-                if (err) callback(err, null);
-                else {
-                    obj = [busqueda.str,busqueda.num,busqueda.pos];
-                    conn.query(query, obj, function (err, result) {
-                        if (err) callback(err, null);
-                        else {
-                            callback(null, result[0].numfilas);
-                            conn.end();
-                        }
-                    });
-                }
-            });
-        }
+function busquedaNumResultados(busqueda,callback) {
+    var conn = mysql.createConnection(conf.DB);
+    if (busqueda != null) {
+        query = 'SELECT COUNT(*) AS numfilas FROM CURSOS WHERE MATCH(titulo, descripcion) AGAINST (?)';
+        conn.connect(function (err) {
+            if (err) callback(err, null);
+            else {
+                obj = [busqueda.str, busqueda.num, busqueda.pos];
+                conn.query(query, obj, function (err, result) {
+                    if (err) callback(err, null);
+                    else {
+                        callback(null, result[0].numfilas);
+                        conn.end();
+                    }
+                });
+            }
+        });
+    }
 }
+        function dameHorariosCurso(idCurso,callback){
+            var conn = mysql.createConnection(conf.DB);
+            if (idCurso != null) {
+                query = 'SELECT * FROM HORARIOS_CURSO WHERE id_curso = ?';
+                conn.connect(function(err){
+                    if (err) callback(err, null);
+                    else {
+                        obj = [idCurso];
+                        conn.query(query, obj, function (err, result) {
+                            if (err) callback(err, null);
+                            else {
+                                callback(null, result);
+                                conn.end();
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
 module.exports = {
     // Probado
     insertCurso: function(values,callback) {
@@ -94,8 +114,13 @@ module.exports = {
                     conn.query(query, obj, function (err, result) {
                         if (err) callback(err, null);
                         else {
-                            callback(null, result);
-                            conn.end();
+                            dameHorariosCurso(idCurso,function(err2,result2){
+                                if(err2) callback(err, null);
+                                else{
+                                    callback(null,{curso:result,horarios:result2});
+                                    conn.end();
+                                }
+                            });
                         }
                     });
                 }
