@@ -1,3 +1,4 @@
+/* Esta implementado,pero en esta practica,no lo usamos como midleware */
 var config =  require('../config');
 var express = require('express');
 var session = require('express-session');

@@ -3,8 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  req.session.ej = 'hola';
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Portal de Cursos' });
 });
 
 module.exports = router;

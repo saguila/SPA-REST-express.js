@@ -41,6 +41,26 @@ function busquedaNumResultados(busqueda,callback) {
             }
         }
 
+        function numPlazasOcupadas(idCurso,callback){
+            var conn = mysql.createConnection(conf.DB);
+            if (idCurso != null) {
+                query = 'SELECT COUNT (*) AS numinscritos FROM CURSOS_USUARIO WHERE id_curso = ?';
+                conn.connect(function(err){
+                    if (err) callback(err, null);
+                    else {
+                        obj = [idCurso];
+                        conn.query(query, obj, function (err, result) {
+                            if (err) callback(err, null);
+                            else {
+                                callback(null, result[0].numinscritos);
+                                conn.end();
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
 module.exports = {
     // Probado
     insertCurso: function(values,callback) {
@@ -115,10 +135,15 @@ module.exports = {
                         if (err) callback(err, null);
                         else {
                             dameHorariosCurso(idCurso,function(err2,result2){
-                                if(err2) callback(err, null);
+                                if(err2) callback(err2, null);
                                 else{
-                                    callback(null,{curso:result,horarios:result2});
-                                    conn.end();
+                                    numPlazasOcupadas(idCurso,function(err3,result3){
+                                        if(err3) callback(err3, null);
+                                        else{
+                                            callback(null,{curso:result[0],horarios:result2,inscritos:result3});
+                                            conn.end();
+                                        }
+                                    });
                                 }
                             });
                         }

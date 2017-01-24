@@ -14,23 +14,9 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-var consultas = require('./bin/consultasSQL');
-
-/*
-var x = {titulo:'Cocina', description:'cocina sobrecillos de jamon', localidad:'Madrid', direccion:'Getafe', plazas:103, fecha_inicio:'2012/10/10',fecha_fin:'2012/11/10',imagen:''};
-consultas.updateCurso(15,x,function(err,result){
-    console.log(result);
-});
-consultas.selectAllCurso(function(err,result){
-  console.log(result)
-});
-consultas.searchCurso({str:'test',num:4,pos:1},function (err,result) {
-   console.log(result.datos);
-});*/
-
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(session);
+//app.use(session); //Para esta practica no usamos sessions.
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

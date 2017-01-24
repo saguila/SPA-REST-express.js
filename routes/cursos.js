@@ -1,10 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/buscarCurso', function(req, res, next) {
-    res.render('buscarCurso',{title:'Buscar curso'});
-});
-
 router.post('/insertarCurso',function(req,res,next){
   var _titulo,_description,_localidad,_direccion,_plazas,_fecha_inicio,_fecha_fin;
   var consultas = require('../bin/consultasSQL');
@@ -52,17 +48,21 @@ router.get('/mostrarCurso',function(req,res,next){
     var _id = req.query.id;
     consultas.selectCurso(_id,function(err,result){
         if(err) res.status(400);
-        res.json(result);
+        var _plazas = result.curso.plazas - result.inscritos; 
+        res.json({resultado:{curso:result.curso,horarios:result.horarios,plazas:_plazas}});
     });
 });
 
 
 router.get('/peticionBusquedaCurso', function(req, res, next) {
     var consultas = require('../bin/consultasSQL');
+    console.log(req.query);
     var busqueda = req.query.str;
     var elemActual = Number(req.query.pos);
-    consultas.searchCurso({str:busqueda,pos:elemActual,num:(elemActual + 5)},function(err,result){
+    var elemFinal = Number(req.query.num);
+    consultas.searchCurso({str:busqueda,pos:elemActual,num:elemFinal},function(err,result){
         if(err) res.status(400);
+        console.log(result);
         res.json({ resultado : result});
     });
 });
