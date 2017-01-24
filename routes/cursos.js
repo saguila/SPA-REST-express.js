@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
 
 router.post('/insertarCurso',function(req,res,next){
   var _titulo,_description,_localidad,_direccion,_plazas,_fecha_inicio,_fecha_fin;
@@ -30,7 +31,8 @@ router.put('/actualizarCurso',function(req,res,next){
     _fecha_fin = req.query.fecha_fin;
     consultas.updateCurso(_id,{titulo:_titulo,description:_description,localidad:_localidad,direccion:_direccion,plazas:_plazas,fecha_inicio:_fecha_inicio,fecha_fin:_fecha_fin,imagen:''},function(err,result){
         if(err) res.status(400);
-        else res.end();
+        else res.status(200);
+        res.end();
     });
 });
 
@@ -56,13 +58,11 @@ router.get('/mostrarCurso',function(req,res,next){
 
 router.get('/peticionBusquedaCurso', function(req, res, next) {
     var consultas = require('../bin/consultasSQL');
-    console.log(req.query);
     var busqueda = req.query.str;
     var elemActual = Number(req.query.pos);
     var elemFinal = Number(req.query.num);
     consultas.searchCurso({str:busqueda,pos:elemActual,num:elemFinal},function(err,result){
         if(err) res.status(400);
-        console.log(result);
         res.json({ resultado : result});
     });
 });
@@ -70,9 +70,28 @@ router.get('/peticionBusquedaCurso', function(req, res, next) {
 router.get('/obtenerImagen',function(req,res,next){
     var consultas = require('../bin/consultasSQL');
     var _id = req.query.id;
-    consultas.selectCurso(_id,function(err,result){
-        if(err) res.status(400);
-        res.json(result);
+    consultas.selectImgCurso(_id,function(err,result){
+        if(err){
+          res.status(404);
+          res.end();
+        }
+        else res.json({img:result});
+    });
+});
+
+router.put('/actualizarImagenCurso',multer({storage: multer.memoryStorage()}).single("img"),function(req,res,next){
+  /* Como maximo las imagenes seran de 64 kb por la columna de la tabla que las contiene que es de tipo BLOW */
+  /* Hacer el put con header Content-Type multipart/form-data */
+    var consultas = require('../bin/consultasSQL');
+    var img = req.file.buffer;
+    var idCurso = req.body.idCurso
+    consultas.updateImgCurso(idCurso,img,function(err,result){
+        if(err) res.status(500);
+        else{
+          if(result.affectedRows > 0)  res.status(200);
+          else res.status(500);
+        }
+        res.end();
     });
 });
 

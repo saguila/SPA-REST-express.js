@@ -5,6 +5,34 @@ var elementosPagina = 5; /* Para cambiar el numero de resultados por pantalla*/
 var posicion = 1;
 var numPaginas = 1;
 
+/* Funcion para codificar el BLOW de mysql en BASE64 para que se pueda mostrar la imagen */
+function encode (input) {
+    var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+    var output = "";
+    var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+    var i = 0;
+
+    while (i < input.length) {
+        chr1 = input[i++];
+        chr2 = i < input.length ? input[i++] : Number.NaN;
+        chr3 = i < input.length ? input[i++] : Number.NaN;
+
+        enc1 = chr1 >> 2;
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        enc4 = chr3 & 63;
+
+        if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+            enc4 = 64;
+        }
+        output += keyStr.charAt(enc1) + keyStr.charAt(enc2) +
+                  keyStr.charAt(enc3) + keyStr.charAt(enc4);
+    }
+    return output;
+}
+
 function formatearFecha(fechaString){
     var fechaObject = new Date(fechaString);
     return fechaObject.getDate() + '-' + (fechaObject.getMonth() + 1) + '-' +fechaObject.getFullYear();
@@ -100,6 +128,23 @@ var res = '<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialo
        $("#contenido").append(res);
 }
 
+function mostrarImagenCurso(idCurso){
+    $.ajax({
+        type: "GET",
+        url: "/obtenerImagen",
+        data: {
+            id: idCurso
+        },
+        success: function (data, textStatus, jqXHR) {
+            var bytes = new Uint8Array(data.img.data);
+            $("#imgCurso").attr("src",'data:image/gif;base64,'+ encode(bytes));
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            //Si pasa lo que sea no mostramos imagen
+        }
+     });
+}
+
 function formatearModal(idCurso){
     $.ajax({
         type: "GET",
@@ -109,6 +154,7 @@ function formatearModal(idCurso){
         },
         success: function (data, textStatus, jqXHR) {
             var curso = data.resultado.curso;
+
             var horarios = "";
             // Presentamos los datos de los horarios
             if(data.resultado.horarios.length > 0){
@@ -119,11 +165,11 @@ function formatearModal(idCurso){
             }
             var fecha = 'desde el ' + formatearFecha(curso.fecha_inicio) + ' hasta el ' + formatearFecha(curso.fecha_fin);
             $(".modal-title").text(curso.titulo);
-            var body = '<p>' + curso.descripcion + '</p>' + '<h5>Lugar de imparticion:</h5>'+ curso.direccion + '<h5>Ciudad:</h5>';
+            var body = '<img id=\"imgCurso\" src=\" \" class=\"img-responsive pull-right\"><p>' + curso.descripcion + '</p>' + '<h5>Lugar de imparticion:</h5>'+ curso.direccion + '<h5>Ciudad:</h5>';
             body += '<p>' + curso.localidad + '</p>' + '<h5>Duracion:</h5>' + '<p>' + fecha + '</p>' + '<h5>Horarios:</h5>' + horarios;
             body += '<h5>Plazas:</h5>' + curso.plazas + ' (' + data.resultado.plazas + ' vacantes)';
             $(".modal-body").html(body);
-
+            mostrarImagenCurso(idCurso);
         },
         // En caso de error, mostramos el error producido
         error: function (jqXHR, textStatus, errorThrown) {

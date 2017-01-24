@@ -169,6 +169,44 @@ module.exports = {
             });
 
     }
+    ,
+    selectImgCurso:function (idCurso,callback) {
+        var conn = mysql.createConnection(conf.DB);
+        query = 'SELECT imagen FROM CURSOS WHERE id_curso =  ?';
+        if(idCurso != null){
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [idCurso];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        callback(null,result[0].imagen);
+                    });
+                }
+            });
+        }
+            
+    }
+    ,
+    updateImgCurso: function (idCurso,img,callback) {
+        var conn = mysql.createConnection(conf.DB);
+        query = 'UPDATE CURSOS SET imagen = ? WHERE id_curso =  ?';
+        if(idCurso != null && img != null){
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [img,idCurso];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        callback(null,result);
+                    });
+                }
+            });
+
+        }
+            
+    }
+
     , // Probado
     searchCurso: function(busqueda,callback){
         var conn = mysql.createConnection(conf.DB);

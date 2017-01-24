@@ -11,6 +11,22 @@ function busquedaCurso(){
 
 }
 
+/* 
+$.ajax({
+        url : "/",
+        type: "POST",
+        data: JSON.stringify([
+            {id: 1, name: "Shahed"}, 
+            {id: 2, name: "Hossain"}
+        ]),
+        contentType: "application/json; charset=utf-8",
+        dataType   : "json",
+        success    : function(){
+            console.log("Pure jQuery Pure JS object");
+        }
+    });
+*/
+
 function inscribirse(){
 	var resp ;
 }
