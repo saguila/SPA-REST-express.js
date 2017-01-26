@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Portal de cursos Curso</title>
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.structure.min.css" type="text/css">
+    <link rel="stylesheet" href="/stylesheets/jquery-ui.theme.min.css" type="text/css">
+    <script src="/javascripts/jquery-3.1.1.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/javascripts/jquery-ui.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/javascripts/bootstrap.min.js" language="javascript" type="text/javascript"></script>
+    <script src="/javascripts/header-manager.js" language="javascript" type="text/javascript"></script>
+    <script src="/javascripts/search-cursos.js" language="javascript" type="text/javascript"></script>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li role="presentation" class="navbar-text itemNav active" ><a href="/">Portal de cursos</a></li>
+    <li role="presentation" class="itemNav" id="buscarCursoNav"><a class="navbar-text">Buscar cursos</a></li>
+    <li role="presentation" class="pull-right">
+        <p class="navbar-text">
+            <button type="button" class="btn btn-default">Inscribirse</button>
+        </p>
+    </li>
+</ul>
+<div id="contenido">
+    <div class="panel panel-default" id="dBusquedaCursos" style="display:none">
+        <div class="panel-heading">Búsqueda de cursos</div>
+        <div class="panel-body">
+            <div class="form-inline">
+                <input class="form-control" name="busqueda" id="searchInput" placeholder="Busqueda por nombre"
+                       type="text">
+                <button type="submit" id="botonSearchCursos" class="btn btn-primary">
+                    <p class="glyphicon glyphicon-search"> Buscar</p></button>
+            </div>
+            <br>
+                <div id="resultadoBusqueda">
+                </div>
+    <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         style="display:none">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <img id="imgCurso" src="" class="img-responsive pull-right">
+                    <p id="pDescripcionCurso"></p>
+                    <h5>Lugar de imparticion:</h5>
+                    <p id="pLugarCurso"></p>
+                    <h5>Ciudad:</h5>
+                    <p id="pDireccionCurso"></p>
+                    <h5>Duracion:</h5>
+                    <p id="pDuracion"></p>
+                    <h5>Horarios:</h5>
+                    <p id="pHorarios"></p>
+                    <h5>Plazas:</h5>
+                    <p id="pPlazas"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="botonInscribirse" class="btn btn-primary">Inscribirse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

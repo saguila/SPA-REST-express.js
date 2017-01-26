@@ -36,6 +36,30 @@ router.put('/actualizarCurso',function(req,res,next){
     });
 });
 
+router.get("/imagenCurso/:id", function(request, response, next) {
+    var consultas = require('../bin/consultasSQL');
+    var n = Number(request.params.id);
+    if (isNaN(n)) {
+        next(new Error("Id no numérico"));
+    }
+    else {
+        consultas.selectImgCurso(n, function(err, imagen) {
+            if (err) {
+            next(err)
+            }
+            else {
+                if (imagen) {
+                    response.end(imagen);
+                }
+                else {
+                response.status( 404);
+                response.end("Not found");
+                }
+            }
+        });
+    }
+});
+
 router.delete('/borrarCurso',function(req,res,next){
     var consultas = require('../bin/consultasSQL');
     var _id = req.query.id;
