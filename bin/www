@@ -6,7 +6,7 @@
 
 var app = require('../app');
 var debug = require('debug')('academia:server');
-var http = require('http');
+var https = require('https');
 var config = require('../config');
 
 /**
@@ -20,7 +20,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer({key:config.HTTPS.key,cert:config.HTTPS.cert},app);
 
 /**
  * Listen on provided port, on all network interfaces.
