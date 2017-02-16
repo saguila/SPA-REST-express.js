@@ -232,5 +232,83 @@ module.exports = {
             });
         }
     }
-
+    ,
+    insertUsuario: function(values,callback){
+        var conn = mysql.createConnection(conf.DB);
+        if (values != null) {
+            query = 'INSERT INTO USUARIOS(nombre,apellidos,email,password,fecha_nacimiento,sexo) VALUES(?,?,?,?,?,?)';
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [values.nombre, values.apellidos, values.email, values.password, values.fecha_nacimiento, values.sexo];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        else {
+                            callback(null, result);
+                            conn.end();
+                        }
+                    });
+                }
+            });
+        }
+    }
+    ,
+    selectUsuario: function (email,callback) {
+        var conn = mysql.createConnection(conf.DB);
+        if (email != null) {
+            query = 'SELECT * FROM USUARIOS WHERE email = ?';
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [email];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        else {
+                            callback(null,result[0]);
+                        }
+                    });
+                }
+            });
+        }
+    }
+    ,
+    insertUsuarioCurso:function(values,callback){
+        var conn = mysql.createConnection(conf.DB);
+        if (values != null) {
+            query = 'INSERT INTO CURSOS_USUARIO(id_usuario,id_curso) VALUES(?,?)';
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [values.id_usuario, values.id_curso];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        else {
+                            callback(null, result);
+                            conn.end();
+                        }
+                    });
+                }
+            });
+        }
+    }
+    ,
+    selectUsuarioCursos:function(idUsuario,callback){
+        var conn = mysql.createConnection(conf.DB);
+        if (idUsuario != null) {
+            query = 'SELECT * FROM CURSOS_USUARIO LEFT OUTER JOIN CURSOS USING (id_curso) WHERE id_usuario = ?';
+            conn.connect(function(err){
+                if (err) callback(err, null);
+                else {
+                    obj = [idUsuario];
+                    conn.query(query, obj, function (err, result) {
+                        if (err) callback(err, null);
+                        else {
+                            callback(null, result);
+                            conn.end();
+                        }
+                    });
+                }
+            });
+        }
+    }
 }

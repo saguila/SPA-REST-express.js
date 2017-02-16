@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-01-2017 a las 20:51:31
+-- Tiempo de generación: 16-02-2017 a las 23:44:49
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.13
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `academia`
 --
-CREATE DATABASE IF NOT EXISTS `academia` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `academia`;
 
 -- --------------------------------------------------------
 
@@ -70,6 +68,7 @@ CREATE TABLE `cursos_usuario` (
   `id_usuario` bigint(20) NOT NULL,
   `id_curso` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 -- --------------------------------------------------------
 
@@ -122,6 +121,17 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `email`, `password`, `fecha_nacimiento`, `sexo`) VALUES
+(1, 'aa', 'aa', 'aa', 'aa', '2017-02-10', 'Hombre'),
+(2, 'asd', 'asd', 'asd', 'sdasd', '0000-00-00', 'Mujer'),
+(3, 'b', 'b', 'b', 'b', '0000-00-00', 'Hombre'),
+(4, 'j', 'j', 'j', 'j', '0000-00-00', 'Mujer'),
+(5, 'i', 'i', 'i', 'i', '0000-00-00', 'Mujer');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -136,7 +146,7 @@ ALTER TABLE `cursos` ADD FULLTEXT KEY `titulo` (`titulo`,`descripcion`);
 -- Indices de la tabla `cursos_usuario`
 --
 ALTER TABLE `cursos_usuario`
-  ADD KEY `cursos_usuario_ibfk_1` (`id_usuario`),
+  ADD UNIQUE KEY `id_usuario` (`id_usuario`,`id_curso`),
   ADD KEY `cursos_usuario_ibfk_2` (`id_curso`);
 
 --
@@ -171,7 +181,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- Restricciones para tablas volcadas
 --

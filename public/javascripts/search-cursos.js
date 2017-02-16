@@ -99,6 +99,7 @@ function formatearModal(idCurso){
                 });
             }
             var fecha = 'desde el ' + formatearFecha(curso.fecha_inicio) + ' hasta el ' + formatearFecha(curso.fecha_fin);
+            $(".modal-title").attr("idcurso",idCurso);
             $(".modal-title").text(curso.titulo);
             $(".modal-body #imgCurso").attr("src","/imagenCurso/"+idCurso);
             $(".modal-body #pDescripcionCurso").text(curso.descripcion);

@@ -11,19 +11,138 @@
     <script src="/javascripts/jquery-ui.min.js" language="javascript" type="text/javascript"></script>
     <script src="/javascripts/bootstrap.min.js" language="javascript" type="text/javascript"></script>
     <script src="/javascripts/header-manager.js" language="javascript" type="text/javascript"></script>
+     <script src="/javascripts/user-manager.js" language="javascript" type="text/javascript"></script>
     <script src="/javascripts/search-cursos.js" language="javascript" type="text/javascript"></script>
 </head>
 <body>
 <ul class="nav nav-tabs">
-    <li role="presentation" class="navbar-text itemNav active" ><a href="/">Portal de cursos</a></li>
+    <li role="presentation" class="navbar-text itemNav active" id="inicio" ><a>Portal de cursos</a></li>
     <li role="presentation" class="itemNav" id="buscarCursoNav"><a class="navbar-text">Buscar cursos</a></li>
-    <li role="presentation" class="pull-right">
-        <p class="navbar-text">
-            <button type="button" class="btn btn-default">Inscribirse</button>
+    <li role="presentation" class="itemNav" id="misCursosNav" style="display:none"><a class="navbar-text">Mis cursos</a></li>
+
+    <li role="presentation" class="pull-right" >
+        <p class="navbar-text" id="panelBoton">
+           <button id="bIndentificarse" type="button" class="btn btn-default">Identificarse</button>
         </p>
     </li>
 </ul>
 <div id="contenido">
+    <div class="panel panel-default" id="dRegistro" style="display:none">
+        <br>
+        <div class="container">
+        <h2>Registro</h2>
+        <br>
+            <div class="form-group row">
+                <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="apellidos" class="col-sm-2 col-form-label">Apellidos</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="apellidos" placeholder="Apellidos">
+                </div>
+            </div>
+            <fieldset class="form-group row">
+                <label class="col-form-legend col-sm-2">Sexo</label>
+                <div class="col-sm-10">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            Mujer
+                            <input class="form-check-input" type="radio" name="gridRadios" id="sexo" value="Mujer">
+                        </label>
+                        <label class="form-check-label">
+                            Hombre
+                            <input class="form-check-input" type="radio" name="gridRadios" id="sexo" value="Hombre">
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fecha_nacimiento" class="col-sm-2 col-form-label">Fecha Nacimiento</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control"  id="fecha_nacimiento" placeholder="dd/mm/aaaa">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="offset-sm-2 col-sm-10">
+                    <button type="submit" id="bRegistroU" class="btn btn-primary">Registrarse</button>
+                </div>  
+            </div>
+        </form>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default" id="dIndentificarse" style="display:none">
+        <div class="container">
+            <h2>Identificarse</h2>
+            <br>
+            <div class="form-group row">
+                <label for="email" class="col-sm-2 col-form-label">Correo electronico</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" placeholder="email">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="offset-sm-2 col-sm-10">
+                    <button type="submit" id="bIndentificarseSubmit" class="btn btn-primary">Identificarse</button>
+                       <a id="lnkRegistro"> Crear nueva cuenta</a>
+                </div>
+             
+            </div>
+        </div>
+    </div>
+
+
+        <div class="panel panel-default" id="dMisCursos" style="display:none">
+        <div class="container">
+            <h2>Proximos Cursos</h2>
+            <table class="table" id="tProximosCursos">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Lugar</th>
+      <th>Inicio</th>
+      <th>Fin</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<h2>Cursos realizados</h2>
+<div id="tCursosRealizados">
+
+</div>
+        </div>
+    </div>
+
+
+    
     <div class="panel panel-default" id="dBusquedaCursos" style="display:none">
         <div class="panel-heading">Búsqueda de cursos</div>
         <div class="panel-body">
